@@ -1,0 +1,16 @@
+{
+    "name": "gridmatrix",
+    "version": "1.0.0",
+    "description": "2D Grid Matrix",
+    "main": "index.js",
+    "scripts": {
+        "example": "node example.js"
+    },
+    "keywords": [
+        "Grid",
+        "Matrix",
+        "2D"
+    ],
+    "author": "Maxime \"Blade\" Gabel",
+    "license": "ISC"
+}
