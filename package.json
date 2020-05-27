@@ -6,6 +6,10 @@
     "scripts": {
         "example": "node example.js"
     },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com/Blade67/GridMatrix.git"
+    },
     "keywords": [
         "Grid",
         "Matrix",
