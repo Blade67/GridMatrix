@@ -13,7 +13,7 @@ npm i @blade67/gridmatrix
 ## **Setup**
 
 ```js
-const GridMatrix = require("GridMatrix");
+const GridMatrix = require("@blade67/gridmatrix");
 
 let grid = new GridMatrix({ width: 2, height: 2 });
 // Output: [[null, null], [null, null]]
@@ -49,7 +49,8 @@ let grid = new GridMatrix({ width: 2, height: 2 });
     // Output: { allowOverflow: true, defaultValue: null }
     ```
 -   **Directions** (Enum/Object: `{ North: 0, NorthEast: 1, East: 2, SouthEast: 3, South: 4, SouthWest: 5, West: 6, NorthWest: 7,
-    ```js
+
+    ````js
     <GridMatrix>.Directions
     // Output: {
     // North: 0,
@@ -67,6 +68,7 @@ let grid = new GridMatrix({ width: 2, height: 2 });
         ```
 
     }`)
+    ````
 
 ## Methods
 
