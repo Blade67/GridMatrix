@@ -1,5 +1,5 @@
 {
-    "name": "gridmatrix",
+    "name": "@blade67/gridmatrix",
     "version": "1.0.0",
     "description": "2D Grid Matrix",
     "main": "index.js",
