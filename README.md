@@ -6,6 +6,8 @@ A simplified solution for 2D Arrays, Grids, Matrices or whatever you want to cal
 
 In case of issues or suggestions, please open an issue on the Github Repo: https://github.com/Blade67/GridMatrix
 
+A minified version as also available for browser usage [here](https://github.com/Blade67/GridMatrix/blob/master/index.min.js).
+
 ## **Installation**
 
 ```
