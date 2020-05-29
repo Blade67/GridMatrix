@@ -65,7 +65,8 @@ module.exports = class GridMatrix {
      * @param {Number} dir - <GridMatrix>.Directions.<"North", "NorthEast", "East", ..>
      *  @returns {*|null}
      */
-    getNeighbour(position, dir) {
+    getNeighbour(position, dir, options) {
+        let opt = Object.assign({ wrap: false }, options);
         let pos = Object.assign({ x: 0, y: 0 }, position);
         if (this.data[pos.y][pos.x] === undefined) return undefined;
         if (Object.values(this.Directions).find((el) => el === dir) === undefined)
@@ -74,26 +75,48 @@ module.exports = class GridMatrix {
                     .map((el, i) => (el = `${i} - <GridMatrix>.Directions.${el}`))
                     .join("\n")}\n`
             );
+        let ty = pos.y;
+        let tx = pos.x;
         try {
             switch (dir) {
                 case this.Directions.North:
-                    return this.data[pos.y - 1][pos.x];
+                    if (opt.wrap && pos.y - 1 < 0) ty = this.data.flat().length / this.width;
+                    return this.data[ty - 1][tx];
                 case this.Directions.NorthEast:
-                    return this.data[pos.y - 1][pos.x + 1];
+                    if (opt.wrap) {
+                        if (pos.y - 1 < 0) ty = this.data.flat().length / this.width;
+                        if (pos.x + 1 > this.data[ty - 1].length - 1) tx = -1;
+                    }
+                    return this.data[ty - 1][tx + 1];
                 case this.Directions.East:
-                    return this.data[pos.y][pos.x + 1];
+                    if (opt.wrap && pos.x + 1 > this.data[ty].length - 1) tx = -1;
+                    return this.data[ty][tx + 1];
                 case this.Directions.SouthEast:
-                    return this.data[pos.y + 1][pos.x + 1];
+                    if (opt.wrap) {
+                        if (pos.y + 1 > this.data.flat().length / this.width - 1) ty = -1;
+                        if (pos.x + 1 > this.data[ty + 1].length - 1) tx = -1;
+                    }
+                    return this.data[ty + 1][tx + 1];
                 case this.Directions.South:
-                    return this.data[pos.y + 1][pos.x];
+                    if (opt.wrap && pos.y + 1 > this.data.flat().length / this.width - 1) ty = -1;
+                    return this.data[ty + 1][tx];
                 case this.Directions.SouthWest:
-                    return this.data[pos.y + 1][pos.x - 1];
+                    if (opt.wrap) {
+                        if (pos.y + 1 > this.data.flat().length / this.width - 1) ty = -1;
+                        if (pos.x - 1 < 0) tx = this.data[pos.y].length;
+                    }
+                    return this.data[ty + 1][tx - 1];
                 case this.Directions.West:
-                    return this.data[pos.y][pos.x - 1];
+                    if (opt.wrap && pos.x - 1 < 0) tx = this.data[ty].length;
+                    return this.data[ty][tx - 1];
                 case this.Directions.NorthWest:
-                    return this.data[pos.y - 1][pos.x - 1];
+                    if (opt.wrap) {
+                        if (pos.y - 1 < 0) ty = this.data.flat().length / this.width;
+                        if (pos.x - 1 < 0) tx = this.data[ty - 1].length;
+                    }
+                    return this.data[ty - 1][tx - 1];
             }
-        } catch {
+        } catch (e) {
             return undefined;
         }
     }
@@ -127,7 +150,7 @@ module.exports = class GridMatrix {
         let opt = Object.assign({ wrap: false }, options);
         let pos = Object.assign({ x: 0, y: 0 }, position);
 
-        if (this.data[pos.y][pos.x] !== undefined) return undefined;
+        if (this.data[pos.y][pos.x] === undefined) return undefined;
         return this.width * pos.y + pos.x - 1 > 0
             ? this.data.flat()[this.width * pos.y + pos.x - 1]
             : opt.wrap
@@ -151,6 +174,70 @@ module.exports = class GridMatrix {
         let tmp = this.data[pos.y][pos.x];
         this.data[pos.y][pos.x] = this.data[tar.y][tar.x];
         this.data[tar.y][tar.x] = tmp;
+        return this.data;
+    }
+
+    /**
+     * @param {Array} data - Column data to add to the GridMatrix
+     */
+    addColumnBefore(data) {
+        if (!Array.isArray(data) || data.length !== this.height) return undefined;
+        for (let col in this.data) {
+            this.data[col].unshift(data[col]);
+        }
+        this.width++;
+        return this.data;
+    }
+
+    /**
+     * @param {Array} data - Column data to add to the GridMatrix
+     */
+    addColumnAfter(data) {
+        if (!Array.isArray(data) || data.length !== this.height) return undefined;
+        for (let col in this.data) {
+            this.data[col].push(data[col]);
+        }
+        this.width++;
+        return this.data;
+    }
+
+    /**
+     * @param {Number} column - The column ID to remove
+     */
+    removeColumn(column) {
+        if (column < 0 || column > this.width) return undefined;
+        for (let col in this.data) {
+            this.data[col].splice(column, 1);
+        }
+        return this.data;
+    }
+
+    /**
+     * @param {Array} data - Row data to add to the GridMatrix
+     */
+    addRowBefore(data) {
+        if (!Array.isArray(data) || data.length !== this.width) return undefined;
+        this.data.unshift(data);
+        this.height++;
+        return this.data;
+    }
+
+    /**
+     * @param {Array} data - Row data to add to the GridMatrix
+     */
+    addRowAfter(data) {
+        if (!Array.isArray(data) || data.length !== this.width) return undefined;
+        this.data.push(data);
+        this.height++;
+        return this.data;
+    }
+
+    /**
+     * @param {Number} row - The row ID to remove
+     */
+    removeRow(row) {
+        if (row < 0 || row > this.width) return undefined;
+        this.data.splice(row, 1);
         return this.data;
     }
 };

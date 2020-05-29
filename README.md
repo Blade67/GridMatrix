@@ -2,7 +2,7 @@
 
 A simplified solution for 2D Arrays, Grids, Matrices or whatever you want to call them!
 
-**Disclaimer**: This module was designed in a non-destructive way, meaning that if anything goes wrong, it tries to return `undefined` instead of an error.
+**Disclaimer**: This module was designed in a non-destructive way, meaning that if anything goes wrong, it tries to return `undefined` instead of an error. (if possible)
 
 Github Repo: https://github.com/Blade67/GridMatrix
 
@@ -109,5 +109,35 @@ let grid = new GridMatrix({ width: 2, height: 2 });
 -   **swap**
     ```js
     <GridMatrix>.swap({ x: 0, y: 0 }, { x: 1, y: 1 });
+    // Output: [[null, null],[null, "Node 0-0"]]
+    ```
+-   **addRowBefore**
+    ```js
+    <GridMatrix>.addRowBefore(["a", "b"]);
+    // Output: [["a", "b"],[null, null],[null, "Node 0-0"]]
+    ```
+-   **addRowAfter**
+    ```js
+    <GridMatrix>.addRowAfter(["a", "b"]);
+    // Output: [[null, null],[null, "Node 0-0"],["a", "b"]]
+    ```
+-   **removeRow**
+    ```js
+    <GridMatrix>.removeRow(1);
+    // Output: [[null, null],["a", "b"]]
+    ```
+-   **addColumnBefore**
+    ```js
+    <GridMatrix>.addColumnBefore(["a", "b"]);
+    // Ouput: [["a", null, null],["b", null, "Node 0-0"]]
+    ```
+-   **addColumnAfter**
+    ```js
+    <GridMatrix>.addColumnAfter(["a", "b"]);
+    // Ouput: [[null, null, "a"],[null, "Node 0-0", "b"]]
+    ```
+-   **removeColumn**
+    ```js
+    <GridMatrix>.removeColumn(2);
     // Output: [[null, null],[null, "Node 0-0"]]
     ```
