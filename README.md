@@ -4,7 +4,7 @@ A simplified solution for 2D Arrays, Grids, Matrices or whatever you want to cal
 
 **Disclaimer**: This module was designed in a non-destructive way, meaning that if anything goes wrong, it tries to return `undefined` instead of an error. (if possible)
 
-Github Repo: https://github.com/Blade67/GridMatrix
+In case of issues or suggestions, please open an issue on the Github Repo: https://github.com/Blade67/GridMatrix
 
 ## **Installation**
 
